@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Tweet Sentiment</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-awusxf8AUojygHf2+joICySzB780jVvQaVCAt1clU3QsyAitLGul28Qxb2r1e5g+" crossorigin="anonymous">
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+	<div class='container-fluid'>
+		<div class='text-center'>
+			<h1>Movie Tweet Sentiment </h1>
+			<h5>Search for Tweets for any Movie</h5>
+			<div id="search_box" class="container-fluid">
+				<input type="text" id="query">
+				<button id="search">Search</button>
+				<div id="loading">Loading...</div>
+                <div id="movie"  style="height: 513px; max-width: 600px;">
+                    <img src="http://image.tmdb.org/t/p/w342/y52mjaCLoJJzxfcDDlksKDngiDx.jpg" align="left">
+                    <p>Caesar and his apes are forced into a deadly conflict with an army of humans led by a ruthless Colonel. After the apes suffer unimaginable losses, Caesar wrestles with his darker instincts and begins his own mythic quest to avenge his kind. As the journey finally brings them face to face, Caesar and the Colonel are pitted against each other in an epic battle that will determine the fate of both their species and the future of the planet.
+</p>
+                </div>
+				<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+			</div>	
+		</div>
+		<div id="tweets"></div>
+		<footer class="text-center">
+			Made with ❤ | <a href="">Github</a> | <a href="">Raul Renteria</a>
+		</footer>	</div>
+	<script type="text/javascript">
+
+
+	</script>
+</body>
+</html>
