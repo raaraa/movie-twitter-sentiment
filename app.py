@@ -1,9 +1,11 @@
 import os
 from flask import Flask, request, render_template, jsonify
 from twitter import TwitterClient
+from movie import MovieClient
 
 app = Flask(__name__)
-api = TwitterClient('@Sirajology')
+twitter_api = TwitterClient('@Sirajology')
+movie_api = MovieClient('war for the planet of the apes')
 
 
 def strtobool(v):
@@ -18,15 +20,23 @@ def index():
 
 @app.route('/tweets')
 def tweets():
-        retweets_only = request.args.get('retweets_only')
-        api.set_retweet_checking(strtobool(retweets_only.lower()))
-        with_sentiment = request.args.get('with_sentiment')
-        api.set_with_sentiment(strtobool(with_sentiment.lower()))
-        query = request.args.get('query')
-        api.set_query(query)
+    retweets_only = request.args.get('retweets_only')
+    twitter_api.set_retweet_checking(strtobool(retweets_only.lower()))
+    with_sentiment = request.args.get('with_sentiment')
+    twitter_api.set_with_sentiment(strtobool(with_sentiment.lower()))
+    query = request.args.get('query')
+    twitter_api.set_query(query)
 
-        tweets = api.get_tweets()
-        return jsonify({'data': tweets, 'count': len(tweets)})
+    tweets = twitter_api.get_tweets()
+    return jsonify({'data': tweets, 'count': len(tweets)})
+
+@app.route('/movie')
+def movie():
+    query = request.args.get('query')
+    movie_api.set_query(query)
+
+    details = movie_api.get_movie()
+    return jsonify({'data': details})
 
 
 port = int(os.environ.get('PORT', 5000))

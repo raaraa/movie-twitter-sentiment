@@ -1,4 +1,4 @@
-#!/Users/Raul/Desktop/labeled-tweet-generator-master/venv/bin/python
+#!/Users/Raul/Desktop/movie-twitter-sentiment/venv/bin/python
 
 import sys
 import getopt

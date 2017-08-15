@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/Raul/Desktop/labeled-tweet-generator-master/venv"
+VIRTUAL_ENV="/Users/Raul/Desktop/movie-twitter-sentiment/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
