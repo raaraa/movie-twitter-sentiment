@@ -39,10 +39,23 @@ class MovieClient(object):
     def get_rating(self):
         return self.get_info('vote_average')
 
+    def get_video(self):
+        BASE_URL = 'https://www.youtube.com/embed/'
+        id = self.get_info()
+        movie = tmdb.Movies(id)
+        result_dic =  movie.videos()
+        #catch exception if api returns 1 list
+        try:
+            key = result_dic['results'][1]['key']
+            return BASE_URL + key
+        except IndexError:
+            key = result_dic['results'][0]['key']
+            return BASE_URL + key
+
     def get_movie(self):
         '''
             title = 0, image = 1, overview = 2
-            release = 3, rating = 4
+            release = 3, rating = 4, video = 5
         '''
         movie_details = []
         movie_details.append(self.get_title())
@@ -50,4 +63,5 @@ class MovieClient(object):
         movie_details.append(self.get_overview())
         movie_details.append(self.get_release_date())
         movie_details.append(self.get_rating())
+        movie_details.append(self.get_video())
         return movie_details

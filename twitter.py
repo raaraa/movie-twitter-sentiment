@@ -39,20 +39,23 @@ class TwitterClient(object):
         return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
     def get_tweet_sentiment(self, tweet):
+        #thresholds to classify pos and neg
+        POS_THRESH = 0.2
+        NEG_THRESH = 0
         analysis = TextBlob(self.clean_tweet(tweet))
-        if analysis.sentiment.polarity > 0:
+        if analysis.sentiment.polarity > POS_THRESH:
             return 'positive'
-        elif analysis.sentiment.polarity == 0:
-            return 'neutral'
-        else:
+        elif analysis.sentiment.polarity < NEG_THRESH:
             return 'negative'
+        else:
+            return 'neutral'
 
     def get_tweets(self):
         tweets = []
 
         try:
-            public_tweets = self.api.search(q=self.query,
-                                          count=self.tweet_count_max)
+            public_tweets = self.api.search(q=self.query, count=self.tweet_count_max,
+                                            lang='en')
             if not public_tweets:
                 pass
             for tweet in public_tweets:
