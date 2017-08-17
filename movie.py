@@ -1,4 +1,5 @@
 import tmdbsimple as tmdb
+from datetime import datetime
 
 class MovieClient(object):
 
@@ -20,13 +21,33 @@ class MovieClient(object):
 
     def get_image(self):
         BASE_URL = 'http://image.tmdb.org/t/p/'
-        SIZE = 'w500'
+        SIZE = 'w342'
         path = self.get_info('poster_path')
         url = BASE_URL + SIZE + path
         return url
 
+    def get_title(self):
+        return self.get_info('original_title')
+
+    def get_release_date(self):
+        #formatting date
+        old_format = self.get_info('release_date')
+        datetimeobject = datetime.strptime(old_format, '%Y-%m-%d')
+        new_format = datetimeobject.strftime('%m-%d-%Y')
+        return new_format
+
+    def get_rating(self):
+        return self.get_info('vote_average')
+
     def get_movie(self):
+        '''
+            title = 0, image = 1, overview = 2
+            release = 3, rating = 4
+        '''
         movie_details = []
+        movie_details.append(self.get_title())
         movie_details.append(self.get_image())
         movie_details.append(self.get_overview())
+        movie_details.append(self.get_release_date())
+        movie_details.append(self.get_rating())
         return movie_details

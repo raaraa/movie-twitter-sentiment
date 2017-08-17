@@ -36,7 +36,7 @@ def movie():
     movie_api.set_query(query)
 
     details = movie_api.get_movie()
-    return jsonify({'data': details})
+    return jsonify({'details': details})
 
 
 port = int(os.environ.get('PORT', 5000))

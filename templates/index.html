@@ -15,15 +15,22 @@
 			<h1>Movie Tweet Sentiment </h1>
 			<h5>Search for Tweets for any Movie</h5>
 			<div id="search_box" class="container-fluid">
-				<input type="text" id="query">
+				<input type="text" id="query" style="width:250px">
 				<button id="search">Search</button>
-				<!--<button id="getcsv">Download CSV</button> -->
 				<div id="loading">Loading...</div>
-                <div id="movie"  style="height: 513px; max-width: 600px;">
-                    <img id="theImg" src="http://image.tmdb.org/t/p/w342/y52mjaCLoJJzxfcDDlksKDngiDx.jpg" align="left">
-                    <p>Caesar and his apes are forced into a deadly conflict with an army of humans led by a ruthless Colonel. After the apes suffer unimaginable losses, Caesar wrestles with his darker instincts and begins his own mythic quest to avenge his kind. As the journey finally brings them face to face, Caesar and the Colonel are pitted against each other in an epic battle that will determine the fate of both their species and the future of the planet.
+                    <div class="row" id="movie">
+                        <div class="col-md-4 col-md-offset-1">
+                             <img id="theImg" src="http://image.tmdb.org/t/p/w342/y52mjaCLoJJzxfcDDlksKDngiDx.jpg">
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <h3>War for the Planet of the Apes</h3>
+                            <p>Average Rating: </p>
+                            <p>Release Date: </p>
+                            <h4>Overview</h4>
+                            <p>Caesar and his apes are forced into a deadly conflict with an army of humans led by a ruthless Colonel. After the apes suffer unimaginable losses, Caesar wrestles with his darker instincts and begins his own mythic quest to avenge his kind. As the journey finally brings them face to face, Caesar and the Colonel are pitted against each other in an epic battle that will determine the fate of both their species and the future of the planet.
 </p>
-                </div>
+                        </div>
+                    </div>
 				<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 			</div>	
 		</div>
@@ -54,7 +61,7 @@
 			        var container = $('#tweets');
 			        var contents = '';
 			        contents+='<div>'
-			        
+
 			        for(i = 0; i < tweets.length; i++){
 			        	contents+= '<div class="panel '+ sentiment_to_color(tweets[i].sentiment) +'"> <div class="panel-heading"> <h3 class="panel-title">'+ tweets[i].user +'</h3> </div> <div class="panel-body"><blockquote>'+ tweets[i].text + '</blockquote> </div> </div>'
                         // contents += '<li class="list-group-item '+ sentiment_to_color(tweets[i].sentiment) +'">'+ tweets[i].user + ": " + tweets[i].text + '</li>';
@@ -68,15 +75,44 @@
 			});
 		}
 
+        function load_movie(querystring) {
+            $.ajax({
+                url: 'movie',
+                data: {'query': querystring},
+                dataType: 'json',
+                type: 'GET',
+                success: function (data) {
+                    var movie = data['details'];
+                    var container = $('#movie');
+                    var contents = '';
+                    contents+= '<div class="row">' +
+                                    '<div class="col-md-4 col-md-offset-1">' +
+                                        '<img src= " ' + movie[1] + '"/>' +
+                                    '</div>' +
+                                    '<div class="col-md-6 text-left">' +
+                                        '<h3>' + movie[0] + '</h3>' + // Title
+                                        '<p>' + 'Average Rating: ' + movie[4] + '</p>' + // Rating
+                                        '<p>' + 'Release Date: ' + movie[3] + '</p>' + // Release date
+                                        '<h4>' + 'Overview' + '</h4>' +
+                                        '<p>' + movie[2] + '</p>' + // Overview
+                                    '</div>' +
+                            '</div>'
+
+
+                    container.html(contents);
+                }
+            });
+        }
+
 		$(document).ready(function(){
 			load_tweets('war for the planet of the apes');
 		});
 
 		$('#search').click(function(){
 			$('#loading').html('Loading...');
-            $('#movie').html('<img src="http://image.tmdb.org/t/p/w342/y52mjaCLoJJzxfcDDlksKDngiDx.jpg"/>')
 			$('#tweets').html('');
 			load_tweets($('#query').val());
+            load_movie($('#query').val());
 		});
 
 	function buildChart(data) {
